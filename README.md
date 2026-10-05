@@ -7,8 +7,8 @@ with custom GPU kernels and an independent Monte Carlo code written to validate 
 3-D dose field is reconstructed in 7.41 ms, about 155,000× faster than the serial
 CPU baseline.**
 
-![Dose maps](results/figures/fig3_dose_maps.png)
-*Left to right: axial slice, sagittal slice, depth dose, and lateral profile of a
+
+ axial slice, sagittal slice, depth dose, and lateral profile of a
 10 × 10 cm IMPT field.*
 
 ---
@@ -137,7 +137,7 @@ apply/                    one-page English project summary
 
 ## Further reading
 
-The `docs/` directory contains five Chinese technical documents: the full
+01_fermi_eyges_derivation.md，02_performance_report.md， 03_validation_report.md and 04_research_log.md the full
 Fermi–Eyges derivation, a performance and profiling report, a physics and numerical
 validation report, a research log of every problem encountered (with the reasoning and
 the fix), and the essay/interview material.
