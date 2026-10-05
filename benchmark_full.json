@@ -1,0 +1,217 @@
+{
+  "rows": [
+    {
+      "name": "朴素 CPU 逐束流 (外推)",
+      "device": "CPU (Ryzen 9 9955HX)",
+      "dtype": "float64",
+      "algorithm": "naive",
+      "min_ms": 1152984.183120914,
+      "median_ms": 1152984.183120914,
+      "speedup_vs_cpu_naive": 1.0,
+      "speedup_vs_prev": 0.0,
+      "max_rel_err": 0.0,
+      "rms_rel_err": 0.0,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "由 200 beams 实测线性外推 (O(M*Nvox))"
+    },
+    {
+      "name": "NumPy 可分离 (逐层精确)",
+      "device": "CPU 单线程",
+      "dtype": "float64",
+      "algorithm": "separable",
+      "min_ms": 6673.722300038207,
+      "median_ms": 6708.460299996659,
+      "speedup_vs_cpu_naive": 171.8701656655087,
+      "speedup_vs_prev": 171.8701656655087,
+      "max_rel_err": 0.0,
+      "rms_rel_err": 0.0,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "float64 参考真值"
+    },
+    {
+      "name": "PyTorch bmm (逐层精确)",
+      "device": "CPU 多线程",
+      "dtype": "float64",
+      "algorithm": "separable",
+      "min_ms": 381.831000035163,
+      "median_ms": 395.4888000153005,
+      "speedup_vs_cpu_naive": 2915.3396583577282,
+      "speedup_vs_prev": 16.962453297633523,
+      "max_rel_err": 5.368743270333269e-16,
+      "rms_rel_err": 3.501360477361348e-18,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "16 threads"
+    },
+    {
+      "name": "PyTorch bmm 逐层精确 (FP32)",
+      "device": "RTX 5070 Ti",
+      "dtype": "float32",
+      "algorithm": "separable",
+      "min_ms": 6.783743858337402,
+      "median_ms": 7.4126081466674805,
+      "speedup_vs_cpu_naive": 155543.65755044887,
+      "speedup_vs_prev": 53.3535285003703,
+      "max_rel_err": 1.5101746767755228e-07,
+      "rms_rel_err": 1.3258751216188141e-09,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "等效带宽 170 GB/s"
+    },
+    {
+      "name": "PyTorch bmm 逐层精确 (TF32 张量核)",
+      "device": "RTX 5070 Ti",
+      "dtype": "tf32",
+      "algorithm": "separable",
+      "min_ms": 6.811456203460693,
+      "median_ms": 7.346208095550537,
+      "speedup_vs_cpu_naive": 156949.56746722915,
+      "speedup_vs_prev": 1.0090386836655445,
+      "max_rel_err": 1.5101746767755228e-07,
+      "rms_rel_err": 1.3258751216188141e-09,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "张量核加速，精度下降"
+    },
+    {
+      "name": "PyTorch bmm 单 sigma 近似 (FP32)",
+      "device": "RTX 5070 Ti",
+      "dtype": "float32",
+      "algorithm": "separable-approx",
+      "min_ms": 4.546815872192383,
+      "median_ms": 5.03718376159668,
+      "speedup_vs_cpu_naive": 228894.60414591717,
+      "speedup_vs_prev": 1.458395890091956,
+      "max_rel_err": 0.20330058291750183,
+      "rms_rel_err": 0.0037820240685152136,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "跨层合并 sigma，牺牲精度换速度"
+    },
+    {
+      "name": "PyTorch 局部窗口 Gather (FP32)",
+      "device": "RTX 5070 Ti",
+      "dtype": "float32",
+      "algorithm": "gather_local",
+      "min_ms": 731.6288452148438,
+      "median_ms": 1003.0911865234375,
+      "speedup_vs_cpu_naive": 1149.4310772652514,
+      "speedup_vs_prev": 0.0050216608711863946,
+      "max_rel_err": 2.6192712224339434e-07,
+      "rms_rel_err": 1.9785778364303222e-09,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.08333333333333333,
+      "mem_mb": 0.0,
+      "note": "K=61, ~0.3 FLOP/B"
+    },
+    {
+      "name": "Triton 窗口 Gather + LUT (逐层精确)",
+      "device": "RTX 5070 Ti",
+      "dtype": "float32",
+      "algorithm": "triton_gather",
+      "min_ms": 80.24956512451172,
+      "median_ms": 82.90259552001953,
+      "speedup_vs_cpu_naive": 13907.697049635659,
+      "speedup_vs_prev": 12.099635484647866,
+      "max_rel_err": 1.0262136321251893e-06,
+      "rms_rel_err": 1.585678855270325e-08,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "自定义 kernel；shared/LUT 缓存"
+    },
+    {
+      "name": "Triton 可分离卷积 (融合高斯 GEMM)",
+      "device": "RTX 5070 Ti",
+      "dtype": "float32",
+      "algorithm": "triton_conv",
+      "min_ms": 17.3885440826416,
+      "median_ms": 19.589088439941406,
+      "speedup_vs_cpu_naive": 58858.49087137833,
+      "speedup_vs_prev": 4.232080312169314,
+      "max_rel_err": 1.0520084275438759e-06,
+      "rms_rel_err": 1.4099954488109488e-08,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.0,
+      "mem_mb": 0.0,
+      "note": "自定义 kernel；核矩阵不落显存"
+    },
+    {
+      "name": "Triton 朴素 Gather (全 M 外推)",
+      "device": "RTX 5070 Ti",
+      "dtype": "float32",
+      "algorithm": "triton_naive",
+      "min_ms": 654.1943846525892,
+      "median_ms": 654.1943846525892,
+      "speedup_vs_cpu_naive": 1762.4489145274579,
+      "speedup_vs_prev": 0.029943834584187416,
+      "max_rel_err": 0.0,
+      "rms_rel_err": 0.0,
+      "flops": 0.0,
+      "arithmetic_intensity": 0.08333333333333333,
+      "mem_mb": 0.0,
+      "note": "每体素循环全部 M 条 beam；由 M<=4096 线性外推"
+    }
+  ],
+  "extra": {
+    "problem": {
+      "grid": [
+        128,
+        128,
+        128
+      ],
+      "voxel_cm": 0.2,
+      "n_layers": 40,
+      "n_spot_per_layer": 1681,
+      "M": 67240,
+      "n_vox": 2097152,
+      "energy_range_MeV": [
+        59.05787709884295,
+        197.96848375290924
+      ]
+    },
+    "ops": {
+      "naive": 141012500480,
+      "separable_exact": 113524736,
+      "gather_local": 174440448,
+      "amplitude_map": 8606720,
+      "M": 67240,
+      "N_vox": 2097152,
+      "L": 40
+    },
+    "roofline": {
+      "naive": {
+        "algorithm": "naive",
+        "bytes_per_voxel": 1613760.0,
+        "flops_per_voxel": 134480.0,
+        "total_bytes": 3384300011520.0,
+        "total_flops": 282025000960.0,
+        "arithmetic_intensity": 0.08333333333333333
+      },
+      "gather_local": {
+        "algorithm": "gather_local",
+        "bytes_per_voxel": 89304.0,
+        "flops_per_voxel": 7442.0,
+        "total_bytes": 187284062208.0,
+        "total_flops": 15607005184.0,
+        "arithmetic_intensity": 0.08333333333333333
+      },
+      "separable": {
+        "algorithm": "separable",
+        "bytes_per_voxel": 549.8125,
+        "flops_per_voxel": 108.265625,
+        "total_bytes": 1153040384.0,
+        "total_flops": 227049472.0,
+        "arithmetic_intensity": 0.1969137205865636
+      }
+    }
+  }
+}
