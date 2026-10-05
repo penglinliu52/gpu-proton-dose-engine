@@ -142,6 +142,6 @@ Fermi–Eyges derivation, a performance and profiling report, a physics and nume
 validation report, a research log of every problem encountered (with the reasoning and
 the fix), and the essay/interview material.
 
-## License
 
-MIT — see `LICENSE`.
+
+
