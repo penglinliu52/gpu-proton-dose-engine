@@ -137,10 +137,10 @@ apply/                    one-page English project summary
 
 ## Further reading
 
-01_fermi_eyges_derivation.md，02_performance_report.md， 03_validation_report.md and 04_research_log.md the full
+01_fermi_eyges_derivation.pdf，02_performance_report.pdf， 03_validation_report.md and 04_research_log.pdf the full
 Fermi–Eyges derivation, a performance and profiling report, a physics and numerical
 validation report, a research log of every problem encountered (with the reasoning and
-the fix), and the essay/interview material. 
+the fix). 
 
 
 
