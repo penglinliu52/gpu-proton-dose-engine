@@ -63,6 +63,19 @@ The engine therefore computes every layer exactly.
 | Triton separable conv, fused Gaussian GEMM | RTX 5070 Ti | 19.6 ms | 58,859× |
 | **PyTorch per-layer batched matmul** | **RTX 5070 Ti** | **7.41 ms** | **155,544×** |
 
+## File directory
+| # | Group | Files | Size | Belongs in |
+|---|---|---:|---:|---|
+| 1 | [Documentation](#1-documentation) | 4 | 1.81 MB | `docs/` |
+| 2 | [Project documentation](#2-project-documentation) | 1 | 5.7 KB | root |
+| 3 | [Physics engine](#3-physics-engine) | 9 | 259 KB | `pbdose/` |
+| 4 | [Executable scripts](#4-executable-scripts) | 3 | 26.2 KB | `scripts/` |
+| 5 | [Verification and diagnostic tools](#5-verification-and-diagnostic-tools) | 11 | 54.5 KB | `tools/` |
+| 6 | [Result data](#6-result-data) | 3 | 11.2 KB | `results/` |
+| 7 | [Figures](#7-figures) | 7 | 1.45 MB | `results/figures/` |
+| 8 | [CUDA implementation](#8-cuda-implementation) | 1 | 60.9 KB | `cuda/` |
+| | **Total** | **39** | **3.59 MB** | |
+
 ## What did not work
 
 My full-field 3%/3mm gamma pass rate is **90.97%**, below my own 98% target. The
