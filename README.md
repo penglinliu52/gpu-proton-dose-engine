@@ -47,7 +47,7 @@ The engine therefore computes every layer exactly.
 | Range straggling σ_R vs. independent Monte Carlo | **2.4%** |
 | Mid-depth (target-coverage) region, 3%/3mm gamma | **99.25 – 100%** |
 
-![Performance](results/figures/fig5_performance.png)
+
 *Acceleration chain and roofline analysis.*
 
 ### Acceleration chain
@@ -88,7 +88,7 @@ physical kernel width at depth z is σ_ρ(z) = √∫₀ᶻ BOHR_COEF/(β²S²) 
 this over-smooths by **6.1×**. It is documented, not tuned away, and is the first item
 on the list below.
 
-![Gamma analysis](results/figures/fig6_gamma.png)
+
 *Gamma map, histogram and central-axis depth dose of the full-field validation.*
 
 ## Reproduce
