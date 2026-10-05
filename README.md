@@ -91,32 +91,6 @@ on the list below.
 
 *Gamma map, histogram and central-axis depth dose of the full-field validation.*
 
-## Reproduce
-
-```bash
-pip install numpy torch matplotlib triton-windows pypdf reportlab
-
-python -c "import sys;sys.path.insert(0,'.');from pbdose import physics as ph;ph.validate_stopping_power()"
-python scripts/run_benchmark.py --repeat 15 --tag full   # ~10 min
-python scripts/make_figures.py
-python scripts/run_validation.py --histories 2000000 --tag bohr \
-       --straggling bohr --sigma-x0 0.30                 # ~4 min
-```
-
-## Layout
-
-```
-pbdose/physics.py         Bethe-Bloch stopping power, CSDA range, Fermi-Eyges moments,
-                          Highland scattering power, analytic Bragg peak, NIST PSTAR check
-pbdose/model.py           dose grid, spot lattice, IMPT problem definition
-pbdose/engines.py         five implementations (naive loop -> NumPy -> PyTorch -> GPU)
-pbdose/triton_kernels.py  three custom GPU kernels (Triton -> native sm_120 code)
-pbdose/montecarlo.py      independent condensed-history Monte Carlo transport (GPU)
-pbdose/gamma.py           Gamma Index analysis (Low 1998 / AAPM TG-218)
-cuda/pencil_beam.cu       hand-written CUDA C++ implementation (1,192 lines, 5 kernels)
-docs/                     technical reports (Chinese, with an English summary)
-apply/                    one-page English project summary
-```
 
 ## Limitations — please read these before citing any number
 
