@@ -64,17 +64,100 @@ The engine therefore computes every layer exactly.
 | **PyTorch per-layer batched matmul** | **RTX 5070 Ti** | **7.41 ms** | **155,544×** |
 
 ## File directory
-| # | Group | Files | Size | Belongs in |
-|---|---|---:|---:|---|
-| 1 | [Documentation](#1-documentation) | 4 | 1.81 MB | `docs/` |
-| 2 | [Project documentation](#2-project-documentation) | 1 | 5.7 KB | root |
-| 3 | [Physics engine](#3-physics-engine) | 9 | 259 KB | `pbdose/` |
-| 4 | [Executable scripts](#4-executable-scripts) | 3 | 26.2 KB | `scripts/` |
-| 5 | [Verification and diagnostic tools](#5-verification-and-diagnostic-tools) | 11 | 54.5 KB | `tools/` |
-| 6 | [Result data](#6-result-data) | 3 | 11.2 KB | `results/` |
-| 7 | [Figures](#7-figures) | 7 | 1.45 MB | `results/figures/` |
-| 8 | [CUDA implementation](#8-cuda-implementation) | 1 | 60.9 KB | `cuda/` |
-| | **Total** | **39** | **3.59 MB** | |
+## 1. Documentation
+
+Four typeset PDF reports. They are the technical record of the project: the derivation,
+the measurements, the validation and the process.
+
+| File | Size | Contents |
+|---|---:|---|
+| `01_fermi_eyges_derivation.pdf` | 300 KB | Full mathematical derivation — small-angle transport equation, Fermi–Eyges moment equations A₀/A₁/A₂, proof that σ_x²(z) = 2A₂(z), the Highland scattering power and its derivative, Bethe–Bloch stopping power, CSDA range, and the analytic integral depth dose construction. 30 numbered equations. |
+| `02_performance_report.pdf` | 422 KB | Benchmarking methodology and the complete acceleration chain, from the serial CPU baseline to the GPU engine. Roofline and bottleneck analysis, VRAM constraints, the numerical-precision budget, and a ranked list of remaining optimisation opportunities. |
+| `03_validation_report.pdf` | 712 KB | Five levels of validation — comparison against NIST PSTAR, CSDA range anchors, energy conservation, the Fermi–Eyges analytic identities, cross-comparison of five independent implementations, and the Monte Carlo reference with its full-field Gamma Index analysis. |
+| `04_research_log.pdf` | 423 KB | Chronological log of the twelve problems encountered, the reasoning at each step and the fix — including the one that remains unfixed. |
+
+## 2. Project documentation
+
+| File | Size | Contents |
+|---|---:|---|
+| `README.md` | 5.7 KB | Project overview: the headline result, the algorithmic idea, the acceleration chain, what did not work, the limitations, and links to the four reports. |
+
+## 3. Physics engine
+
+The core library. Currently sitting in the repository root; imports assume the package
+directory `pbdose/`.
+
+| File | Size | Responsibility |
+|---|---:|---|
+| `physics.py` | 21.6 KB | Bethe–Bloch stopping power, numerically integrated CSDA range table, Highland scattering power and its derivative, Fermi–Eyges moments, and the analytic integral depth dose (IDD) with range straggling and nuclear attenuation. |
+| `model.py` | 13.6 KB | Core data structures — `DoseGrid`, `SpotLattice`, `PBProblem` — and builders for Gaussian and flat IMPT fields plus the clinical layer energies. |
+| `engines.py` | 17.6 KB | Five dose-calculation implementations: naive Python triple loop, naive NumPy per beam, separable NumPy, PyTorch batched matrix multiplication (per-layer exact), and PyTorch windowed gather. |
+| `triton_kernels.py` | 12.8 KB | Three custom Triton kernels — naive gather, windowed gather with a shared-memory LUT, and a fused separable Gaussian convolution. JIT-compiled through PTX and `ptxas` to native `sm_120` code. |
+| `montecarlo.py` | 78.0 KB | Independent class-II condensed-history Monte Carlo: Bohr energy straggling, nuclear attenuation and line-integral voxel scoring. Used as the independent reference for the Gamma analysis. |
+| `gamma.py` | 10.4 KB | Gamma Index implementation following Low (1998) and AAPM TG-218 — global normalisation, dose threshold, and the distance-to-agreement search. |
+| `benchmark.py` | 5.6 KB | Timing harness: warm-up, CUDA events, median of N runs, and operation counting. |
+| `viz.py` | 16.4 KB | Figure generation for all seven result plots. |
+| `__init__.py` | 1.1 KB | Package entry point. |
+
+## 4. Executable scripts
+
+Top-level entry points. Expect to be run from the repository root.
+
+| File | Size | Responsibility |
+|---|---:|---|
+| `run_benchmark.py` | 13.5 KB | Runs the full benchmark sweep and writes `results/benchmark_full.json`. |
+| `run_validation.py` | 9.3 KB | Runs the validation pipeline. Configurable via flags for histories, grid size, depth samples, voxel size, layer count, spot count, straggling model and beam spot size. |
+| `make_figures.py` | 3.4 KB | Regenerates all seven figures from the stored result data. |
+
+## 5. Verification and diagnostic tools
+
+One-off checks and diagnostics used during development. They are kept because each one
+corresponds to a specific question that had to be answered.
+
+| File | Size | Responsibility |
+|---|---:|---|
+| `mc_selftest.py` | 33.4 KB | Monte Carlo internal self-tests — statistics, straggling behaviour and energy deposition. |
+| `engine_check.py` | 3.1 KB | Cross-checks the five implementations against one another. |
+| `triton_check2.py` | 2.9 KB | Correctness checks for the custom Triton kernels against the NumPy reference. |
+| `mc_vs_analytic.py` | 2.6 KB | Compares the Monte Carlo and analytic lateral profiles and second moments. |
+| `gamma_regions.py` | 2.4 KB | Decomposes Gamma failures by region — entrance, interior, lateral edge and distal falloff. |
+| `gpu_microbench.py` | 2.3 KB | GPU hardware microbenchmarks: DRAM bandwidth, GEMM peak, machine balance. |
+| `fetch_pstar.py` | 1.9 KB | Retrieves NIST PSTAR reference stopping-power data for the validation. |
+| `grid_check.py` | 1.8 KB | Grid-convergence checks on the dose grid and depth sampling. |
+| `crosscheck.py` | 1.7 KB | General cross-validation helpers shared by the other tools. |
+| `profile_diff.py` | 1.7 KB | Depth-dose and lateral profile difference analysis. |
+| `fluence_check.py` | 1.4 KB | Verifies the fluence-normalisation convention of the analytic IDD. |
+
+## 6. Result data
+
+Machine-readable output of the benchmark and validation runs. All numbers quoted in the
+reports are traceable to these files.
+
+| File | Size | Contents |
+|---|---:|---|
+| `benchmark_full.json` | 6.7 KB | Full benchmark output — per-implementation timings, speed-ups and operation counts. |
+| `validation_bohr.json` | 4.1 KB | Validation results with the Bohr range-straggling model. |
+| `gpu_microbench.json` | 0.4 KB | GPU microbenchmark results — DRAM bandwidth, GEMM peaks and machine balance. |
+
+## 7. Figures
+
+Seven result plots. Referenced by the reports; source data in `results/`.
+
+| File | Size | Contents |
+|---|---:|---|
+| `fig4_accuracy_variants.png` | 330 KB | Accuracy comparison across implementation variants, including the single-σ failure mode. |
+| `fig5_performance.png` | 254 KB | Acceleration chain and roofline analysis. |
+| `fig1_physics_validation.png` | 242 KB | Triple validation of stopping power, CSDA range and the analytic Bragg peak. |
+| `fig3_dose_maps.png` | 216 KB | Axial slice, sagittal slice, depth dose and lateral profile of a 10 × 10 cm IMPT field. |
+| `fig6_gamma.png` | 206 KB | Gamma map, histogram and central-axis depth dose of the full-field validation. |
+| `fig2_fermi_eyges.png` | 170 KB | Fermi–Eyges lateral broadening and the local scattering power. |
+| `fig7_gamma_criteria.png` | 67 KB | Gamma pass rate as a function of the acceptance criteria. |
+
+## 8. CUDA implementation
+
+| File | Size | Contents |
+|---|---:|---|
+| `pencil_beam.cu` | 60.9 KB | Hand-written CUDA C++. Five `__global__` kernels — naive gather, shared-LUT gather, spot-amplitude scatter, separable Gaussian convolution and batched gather — plus the `extern "C"` host API and a `-DPB_STANDALONE_MAIN` self-test program. |
 
 ## What did not work
 
