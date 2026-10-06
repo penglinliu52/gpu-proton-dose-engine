@@ -207,7 +207,7 @@ on the list below.
 
 ## Further reading
 
-01_fermi_eyges_derivation.pdf，02_performance_report.pdf， 03_validation_report.md and 04_research_log.pdf the full
+01_fermi_eyges_derivation.pdf，02_performance_report.pdf， 03_validation_report.pdf and 04_research_log.pdf the full
 Fermi–Eyges derivation, a performance and profiling report, a physics and numerical
 validation report, a research log of every problem encountered (with the reasoning and
 the fix). 
