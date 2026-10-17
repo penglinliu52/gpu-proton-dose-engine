@@ -212,6 +212,14 @@ Fermi–Eyges derivation, a performance and profiling report, a physics and nume
 validation report, a research log of every problem encountered (with the reasoning and
 the fix). 
 
+## Acknowledgements & Disclosures
+
+### Mentorship & Guidance
+I would like to express my sincere gratitude to Prof. Kunyu Yang Union HospitalCancer Center, Tongji Medical College, Huazhong University of Science and Technology for his invaluable guidanceand continuous support throughout this research.
+
+### AI Assistance Statement
+Generative AI tools were used strictly for language editing and improving text readability in this documentation. All core concepts, mathematical Derivations, software architectures, algorithms, and research conclusions were independently conceived, designed, implemented, and verified by the author.
+
 
 
 
