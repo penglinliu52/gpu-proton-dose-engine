@@ -218,10 +218,10 @@ the fix).
 I would like to express my sincere gratitude to Prof. Kunyu Yang Union Hospital Cancer Center, Tongji Medical College, Huazhong University of Science and Technology for his invaluable guidance and continuous support throughout this research.
 
 ### AI Assistance Statement
-Generative AI tools were used strictly for language editing and improving text readability in this documentation. All core concepts, mathematical Derivations, software architectures, algorithms, and research conclusions were independently conceived, designed, implemented, and verified by the author.
+Generative AI tools were used strictly for language editing and improving text readability in these documents. All core concepts, mathematical Derivations, software architectures, algorithms, and research conclusions were independently conceived, designed, implemented, and verified by the author.
 
 ## Special Note
-Because I did this research with my mentor Kunyu Yang in a Chinese environment, the comments in the code are in Chinese
+Because I did this research with my mentor Kunyu Yang in a Chinese environment, the comments and some output in the code are in Chinese.
 
 
 
