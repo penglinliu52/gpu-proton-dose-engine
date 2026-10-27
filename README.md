@@ -74,7 +74,6 @@ the measurements, the validation and the process.
 | `01_fermi_eyges_derivation.pdf` | 300 KB | Full mathematical derivation — small-angle transport equation, Fermi–Eyges moment equations A₀/A₁/A₂, proof that σ_x²(z) = 2A₂(z), the Highland scattering power and its derivative, Bethe–Bloch stopping power, CSDA range, and the analytic integral depth dose construction. 30 numbered equations. |
 | `02_performance_report.pdf` | 422 KB | Benchmarking methodology and the complete acceleration chain, from the serial CPU baseline to the GPU engine. Roofline and bottleneck analysis, VRAM constraints, the numerical-precision budget, and a ranked list of remaining optimisation opportunities. |
 | `03_validation_report.pdf` | 712 KB | Five levels of validation — comparison against NIST PSTAR, CSDA range anchors, energy conservation, the Fermi–Eyges analytic identities, cross-comparison of five independent implementations, and the Monte Carlo reference with its full-field Gamma Index analysis. |
-| `04_research_log.pdf` | 423 KB | Chronological log of the twelve problems encountered, the reasoning at each step and the fix — including the one that remains unfixed. |
 
 ## 2. Project documentation
 
