@@ -216,7 +216,7 @@ validation report
 I would like to express my sincere gratitude to Prof. Kunyu Yang Union Hospital Cancer Center, Tongji Medical College, Huazhong University of Science and Technology for his invaluable guidance and continuous support throughout this research.
 
 ### AI Assistance Statement
-Generative AI was used for language polishing, some draft code comments, LaTeX typesetting, and code-review suggestions; I reviewed all AI-assisted material. The physics model, algorithm choices, experiments, numerical results, and conclusions are my own work, verified item by item.
+Generative AI was used for language polishing, LaTeX typesetting, and code-review suggestions; I reviewed all AI-assisted material. The physics model, algorithm choices, experiments, numerical results, and conclusions are my own work, verified item by item.
 
 
 
