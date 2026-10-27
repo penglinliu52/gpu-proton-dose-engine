@@ -207,10 +207,9 @@ on the list below.
 
 ## Further reading
 
-01_fermi_eyges_derivation.pdf，02_performance_report.pdf， 03_validation_report.pdf and 04_research_log.pdf the full
+01_fermi_eyges_derivation.pdf，02_performance_report.pdf， and 03_validation_report.pdf  the full
 Fermi–Eyges derivation, a performance and profiling report, a physics and numerical
-validation report, a research log of every problem encountered (with the reasoning and
-the fix). 
+validation report
 
 ## Acknowledgements & Disclosures
 
@@ -218,7 +217,9 @@ the fix).
 I would like to express my sincere gratitude to Prof. Kunyu Yang Union Hospital Cancer Center, Tongji Medical College, Huazhong University of Science and Technology for his invaluable guidance and continuous support throughout this research.
 
 ### AI Assistance Statement
-Generative AI tools were used strictly for language editing and improving text readability in these documents. All core concepts, mathematical Derivations, software architectures, algorithms, and research conclusions were independently conceived, designed, implemented, and verified by the author.
+Generative AI was used for language polishing, some draft code comments, LaTeX typesetting, and code-review suggestions; I reviewed all AI-assisted material. The physics model, algorithm choices, experiments, numerical results, and conclusions are my own work, verified item by item.
+
+
 
 ## Special Note
 Because I did this research with my mentor Kunyu Yang in a Chinese environment, the comments and some output in the code are in Chinese.
